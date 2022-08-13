@@ -14,6 +14,9 @@
 
 ADemoCharacter::ADemoCharacter()
 {
+	power = 0;
+	hp = 100;
+
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
 
@@ -157,4 +160,10 @@ void ADemoCharacter::MoveRight(float Value)
 void ADemoCharacter::powerup()
 {
 	power++;
+}
+
+
+void ADemoCharacter::damaged(int x)
+{
+	hp -= x;
 }

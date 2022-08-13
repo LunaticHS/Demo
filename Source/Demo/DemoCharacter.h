@@ -74,9 +74,13 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int power;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int hp;
 
 	UFUNCTION(BlueprintCallable)
 	void powerup();
 	
+	UFUNCTION(BlueprintCallable)
+	void damaged(int x);
 };
 
