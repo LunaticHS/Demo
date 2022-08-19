@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Projectile.h"
 #include "DemoCharacter.generated.h"
 
 UCLASS(config=Game)
@@ -43,6 +44,8 @@ protected:
 	/** Called for side to side input */
 	void MoveRight(float Value);
 
+	void Arm(float Value);
+
 	/** 
 	 * Called via input to turn at a given rate. 
 	 * @param Rate	This is a normalized rate, i.e. 1.0 means 100% of desired turn rate
@@ -76,11 +79,25 @@ public:
 	int power;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int hp;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool Firing;
 
 	UFUNCTION(BlueprintCallable)
 	void powerup();
 	
 	UFUNCTION(BlueprintCallable)
 	void damaged(int x);
+
+	// 处理发射物射击的函数。
+	UFUNCTION(BlueprintCallable)
+	void Fire();
+
+	// 枪口相对于摄像机位置的偏移。
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
+	FVector MuzzleOffset;
+
+	// 要生成的发射物类。
+	UPROPERTY(EditDefaultsOnly, Category = Projectile)
+	TSubclassOf<class AProjectile> ProjectileClass;
 };
 

@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
+#include "FPSHUD.h"
 #include "DemoGameMode.generated.h"
 
 UCLASS(minimalapi)

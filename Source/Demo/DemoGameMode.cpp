@@ -2,6 +2,7 @@
 
 #include "DemoGameMode.h"
 #include "DemoCharacter.h"
+#include "FPSHUD.h"
 #include "UObject/ConstructorHelpers.h"
 
 ADemoGameMode::ADemoGameMode()
@@ -12,4 +13,12 @@ ADemoGameMode::ADemoGameMode()
 	{
 		DefaultPawnClass = PlayerPawnBPClass.Class;
 	}
+
+
+	static ConstructorHelpers::FClassFinder<AHUD> TheHUDOb(TEXT("/Game/UI/BP_FPSHUD"));
+	if (TheHUDOb.Class != NULL)
+	{
+		HUDClass = TheHUDOb.Class;
+	}
+	//HUDClass = AFPSHUD::StaticClass();
 }

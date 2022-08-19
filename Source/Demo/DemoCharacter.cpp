@@ -16,6 +16,7 @@ ADemoCharacter::ADemoCharacter()
 {
 	power = 0;
 	hp = 100;
+	Firing = 0;
 
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
@@ -56,7 +57,11 @@ ADemoCharacter::ADemoCharacter()
 void ADemoCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
 	// Set up gameplay key bindings
-	check(PlayerInputComponent);
+	//check(PlayerInputComponent);
+	Super::SetupPlayerInputComponent(PlayerInputComponent);
+	PlayerInputComponent->BindAxis("Arm", this, &ADemoCharacter::Arm);
+	InputComponent->BindAction("Fire", IE_Pressed, this, &ADemoCharacter::Fire);
+
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 
@@ -66,6 +71,7 @@ void ADemoCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInpu
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &ADemoCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &ADemoCharacter::MoveRight);
+
 
 	// We have 2 versions of the rotation bindings to handle different kinds of devices differently
 	// "turn" handles devices that provide an absolute delta, such as a mouse.
@@ -81,6 +87,7 @@ void ADemoCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInpu
 
 	// VR headset functionality
 	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &ADemoCharacter::OnResetVR);
+
 }
 
 
@@ -128,6 +135,14 @@ void ADemoCharacter::LookUpAtRate(float Rate)
 	AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds());
 }
 
+void ADemoCharacter::Arm(float Value)
+{
+	if ((Controller != nullptr) && (Value != 0.0f))
+	{
+		CameraBoom->TargetArmLength += Value;
+	}
+}
+
 void ADemoCharacter::MoveForward(float Value)
 {
 	if ((Controller != nullptr) && (Value != 0.0f))
@@ -166,4 +181,44 @@ void ADemoCharacter::powerup()
 void ADemoCharacter::damaged(int x)
 {
 	hp -= x;
+}
+
+void ADemoCharacter::Fire()
+{
+	// 试图发射发射物。
+	if (ProjectileClass)
+	{
+		Firing = 1;
+		// 获取摄像机变换。
+		FVector CameraLocation;
+		FRotator CameraRotation;
+		GetActorEyesViewPoint(CameraLocation, CameraRotation);
+
+		// 设置MuzzleOffset，在略靠近摄像机前生成发射物。
+		MuzzleOffset.Set(100.0f, 0.0f, 0.0f);
+
+		// 将MuzzleOffset从摄像机空间变换到世界空间。
+		FVector MuzzleLocation = CameraLocation + FTransform(CameraRotation).TransformVector(MuzzleOffset);
+
+		// 使目标方向略向上倾斜。
+		FRotator MuzzleRotation = CameraRotation;
+		MuzzleRotation.Pitch += 10.0f;
+
+		UWorld* World = GetWorld();
+		if (World)
+		{
+			FActorSpawnParameters SpawnParams;
+			SpawnParams.Owner = this;
+			SpawnParams.Instigator = GetInstigator();
+
+			// 在枪口位置生成发射物。
+			AProjectile* Projectile = World->SpawnActor<AProjectile>(ProjectileClass, MuzzleLocation, MuzzleRotation, SpawnParams);
+			if (Projectile)
+			{
+				// 设置发射物的初始轨迹。
+				FVector LaunchDirection = MuzzleRotation.Vector();
+				Projectile->FireInDirection(LaunchDirection);
+			}
+		}
+	}
 }
