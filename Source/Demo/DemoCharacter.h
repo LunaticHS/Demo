@@ -92,6 +92,12 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void Fire();
 
+	UFUNCTION(BlueprintCallable)
+	void BindYaw();
+
+	UFUNCTION(BlueprintCallable)
+	void ReleaseYaw();
+
 	// 枪口相对于摄像机位置的偏移。
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	FVector MuzzleOffset;

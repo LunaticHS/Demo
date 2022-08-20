@@ -222,3 +222,13 @@ void ADemoCharacter::Fire()
 		}
 	}
 }
+
+void ADemoCharacter::BindYaw()
+{
+	bUseControllerRotationYaw = true;
+}
+
+void ADemoCharacter::ReleaseYaw()
+{
+	bUseControllerRotationYaw = false;
+}
