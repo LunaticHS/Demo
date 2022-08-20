@@ -1,9 +1,3 @@
-UMG界面：
-完成了基础任务：得分（Coin），基本信息（血量），按钮（跳跃）
-视频链接：https://pan.baidu.com/s/1nwpPaKbZgt2njQ5ed9Bh4Q 
-提取码：fboh 
-
-——————————————————————————————————————————————
 动画骨骼：
 视频链接：https://pan.baidu.com/s/1se2JPyc9L9GO0SMJUOpeMg 
 提取码：rexi 
@@ -19,3 +13,8 @@ UMG界面：
    * 使用蒙太奇的插槽和分层混合 
    * 近战攻击
 5. （选做）按下Alt键实现自由视角。（完成）
+
+UMG界面：
+完成了基础任务：得分（Coin），基本信息（血量），按钮（跳跃）
+视频链接：https://pan.baidu.com/s/1nwpPaKbZgt2njQ5ed9Bh4Q 
+提取码：fboh 
