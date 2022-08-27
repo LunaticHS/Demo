@@ -1,3 +1,10 @@
+基本物理：
+视频链接：https://pan.baidu.com/s/1Yx3i4-Q1AAAQeTlgSqOxMg 
+提取码：1lxv 
+1. 实现脚印以及脚步声（完成）
+2. 实现枪械的pick（完成）
+3. 抛体枪械，命中角色后立刻爆炸，命中场景后速度衰减到一定程度后爆炸。并区分物理材质，如金属土壤，根据物理材质有不同的速度反馈。（完成）
+
 动画骨骼：
 视频链接：https://pan.baidu.com/s/1se2JPyc9L9GO0SMJUOpeMg 
 提取码：rexi 
